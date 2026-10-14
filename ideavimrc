@@ -1,0 +1,123 @@
+"" Leader first: every <leader> mapping below depends on this
+let mapleader=" "
+
+"" Basics --------------------------------
+set scrolloff=5
+set number relativenumber
+set timeoutlen=400
+set clipboard+=unnamedplus
+set incsearch hlsearch ignorecase smartcase
+set showmode
+
+"" IDE integration
+set ideajoin
+set idearefactormode=keep
+set ideamarks          " Vim marks = IDE bookmarks. Uppercase marks (mA, 'A) jump across files
+
+nnoremap \e :e ~/.ideavimrc<CR>
+nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+nnoremap <Esc> :nohlsearch<CR><Esc>
+
+"" Plugins --------------------------------
+set surround
+set argtextobj
+let g:argtextobj_pairs="[:],(:),<:>"
+Plug 'tommcdo/vim-exchange'
+set NERDTree
+set multiple-cursors
+map mc <A-n>
+map mx <A-x>
+map mp <A-p>
+Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/ReplaceWithRegister'
+set textobj-entire
+Plug 'machakann/vim-highlightedyank'
+Plug 'michaeljsmith/vim-indent-object'
+
+"" Editing --------------------------------
+map <C-c> <Esc>
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzz
+nnoremap N Nzz
+xnoremap <leader>p "_dP
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap <leader>r :action RenameElement<CR>
+nnoremap <leader>R :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>= :action OptimizeImports <bar> action ReformatCode<CR>
+nnoremap <leader>s :write<CR>
+
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseAllRegions<CR>
+nnoremap <leader>zo :action ExpandAllRegions<CR>
+
+"" Where am I? --------------------------------
+nnoremap <leader>e :NERDTreeFind<CR>
+nnoremap <leader>E :NERDTreeToggle<CR>
+nnoremap <leader>n :action ShowNavBar<CR>
+nnoremap <c-s> :action FileStructurePopup<CR>
+
+"" Getting back --------------------------------
+" IDE Back/Forward also covers jumps made with the mouse or Cmd-click
+nnoremap <C-o> :action Back<CR>
+nnoremap <C-i> :action Forward<CR>
+nnoremap <leader><leader> :action RecentFiles<CR>
+nnoremap <leader>fc :action RecentChangedFiles<CR>
+nnoremap <leader>l :action RecentLocations<CR>
+nnoremap <leader>B :action ShowBookmarks<CR>
+
+"" Finding --------------------------------
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>/ :action FindInPath<CR>
+nnoremap <leader>u :action FindUsages<CR>
+nnoremap <leader>h :action CallHierarchy<CR>
+nnoremap <leader>H :action LocalHistory.ShowHistory<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gp :action GotoSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gi :action GotoImplementation<CR>
+
+"" Tabs: keep few, kill often --------------------------------
+nnoremap <leader>tq :action CloseContent<CR>
+nnoremap <leader>to :action CloseAllEditorsButActive<CR>
+nnoremap <leader>ta :action CloseAllEditors<CR>
+nnoremap <leader>tr :action ReopenClosedTab<CR>
+" Pin the 2-3 files you're actually working in, then nuke the rest.
+" Check the pin action ID on your version with  :actionlist pin
+nnoremap <leader>tp :action PinActiveEditorTab<CR>
+nnoremap <leader>tu :action CloseAllUnpinnedEditors<CR>
+
+"" Splits --------------------------------
+sethandler <c-h> a:vim
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+sethandler <c-l> a:vim
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+nnoremap <c-\> :action SplitVertically<CR>
+nnoremap <c--> :action SplitHorizontally<CR>
+nnoremap <leader>wm :action MoveEditorToOppositeTabGroup<CR>
+nnoremap <leader>wc :action Unsplit<CR>
+nnoremap <leader>wo :action UnsplitAll<CR>
+
+"" Tool windows --------------------------------
+nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
+nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+nnoremap <M-p> :action JumpToLastWindow<CR>
+nnoremap <M-x> :action HideAllWindows<CR>
+
+"" Run / debug --------------------------------
+nnoremap ,r :action ContextRun<CR>
+nnoremap ,c :action RunClass<CR>
+nnoremap ,f :action ChooseRunConfiguration<CR>
+nnoremap ,u :action Rerun<CR>
+nnoremap ,s :action Stop<CR>
+nnoremap ,b :action ToggleLineBreakpoint<CR>
+nnoremap ,d :action ContextDebug<CR>
